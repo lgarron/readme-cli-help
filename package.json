@@ -1,7 +1,9 @@
 {
   "name": "readme-cli-help",
   "version": "0.1.1",
-  "main": "index.ts",
+  "bin": {
+    "readme-cli-help": "./index.ts"
+  },
   "type": "module",
   "devDependencies": {
     "@biomejs/biome": "latest",
