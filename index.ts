@@ -9,13 +9,12 @@ import { parseArgs } from "node:util";
 const DEFAULT_README_PATH = "./README.md";
 
 const {
-  values: { readmePath, help },
+  values: { "readme-path": readmePath, help },
   positionals,
 } = parseArgs({
   options: {
-    readmePath: {
+    "readme-path": {
       type: "string",
-      long: "readme-path",
     },
     help: {
       type: "boolean",
@@ -61,16 +60,18 @@ for (const line of input.split("\n")) {
     // Ironically, we can't use `Bun.spawn`, because it's *too* safe about separating the command and individual arguments.
     // const helpText = (await new Response(Bun.spawn([helpCommand]).stdout).text()).trim();
 
-    const helpText: string = await new Promise((resolve, reject) => {
-      exec(helpCommand, (error, stdout, _stderr) => {
-        if (error) {
-          // TODO: accept status codes other than 0? Maybe when a specific flag is passed?
-          reject(error);
-          return;
-        }
-        resolve(stdout);
-      });
-    });
+    const helpText = (
+      (await new Promise((resolve, reject) => {
+        exec(helpCommand, (error, stdout, _stderr) => {
+          if (error) {
+            // TODO: accept status codes other than 0? Maybe when a specific flag is passed?
+            reject(error);
+            return;
+          }
+          resolve(stdout);
+        });
+      })) as string
+    ).trim();
     outputLineGroups.push(helpText);
     state = State.AfterCLICodeFence; // Set state for future lines.
   }

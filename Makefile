@@ -17,9 +17,9 @@ update-Makefile:
 	@if [ "$(shell uname -s)" = "Darwin" ] ; then sed -i "" ${UPDATE_MAKEFILE_SED_ARGS} ; fi
 	@if [ "$(shell uname -s)" != "Darwin" ] ; then sed -i"" ${UPDATE_MAKEFILE_SED_ARGS} ; fi
 
-.PHONY: readme-cli-help
-readme-cli-help:
-	./index.ts "./index.ts --help"
+.PHONY: test
+test:
+	./index.ts --readme-path README.test.md "./index.ts --help"
 
 .PHONY: publish
 publish:
