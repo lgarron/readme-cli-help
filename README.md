@@ -21,4 +21,3 @@ The following is a `cli-help` block itself generated using `readme-cli-help`
 ````cli-help
 Usage: readme-cli-help [--readme-path PATH] "./my/command --help"
 ````
-# readme-cli-help
