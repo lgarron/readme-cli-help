@@ -19,7 +19,7 @@ update-Makefile:
 
 .PHONY: test
 test:
-	./index.ts --readme-path README.test.md "./index.ts --help"
+	./index.ts --readme-path README.test.md --fence cli-help-test "./index.ts --help"
 
 .PHONY: publish
 publish:

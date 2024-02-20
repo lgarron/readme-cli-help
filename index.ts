@@ -7,15 +7,21 @@ import { exit } from "node:process";
 import { parseArgs } from "node:util";
 
 const DEFAULT_README_PATH = "./README.md";
+const DEFAULT_FENCE = "cli-help";
 
 const {
-  values: { "readme-path": readmePath, help },
+  values: { "readme-path": readmePath, help, fence },
   positionals,
 } = parseArgs({
   options: {
     "readme-path": {
       type: "string",
       default: DEFAULT_README_PATH,
+    },
+    fence: {
+      // https://spec.commonmark.org/0.31.2/#info-string
+      type: "string",
+      default: DEFAULT_FENCE,
     },
     help: {
       type: "boolean",
@@ -27,7 +33,7 @@ const {
 // biome-ignore lint/style/noInferrableTypes: Explicit is better than implicit.
 function printUsageAndExit(exitCode: number = 1) {
   console.log(
-    `Usage: readme-cli-help [--help] [--readme-path PATH] "./my/command --help"`,
+    `Usage: readme-cli-help [--help] [--fence FENCE] [--readme-path PATH] "./my/command --help"`,
   );
   exit(exitCode);
 }
@@ -50,6 +56,9 @@ enum State {
 }
 
 let state: State = State.BeforeCLICodeFence;
+
+// biome-ignore lint/style/useTemplate: Template syntax would require escaping each backtick, which is not as clear.
+const fenceLine = "````" + fence;
 
 const outputLineGroups: string[] = [];
 for (const line of input.split("\n")) {
@@ -77,7 +86,7 @@ for (const line of input.split("\n")) {
     state = State.AfterCLICodeFence; // Set state for future lines.
   }
 
-  if (line === "````cli-help") {
+  if (line === fenceLine) {
     switch (state) {
       case State.BeforeCLICodeFence:
         state = State.InsideCLICodeFence;
