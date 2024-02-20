@@ -1,5 +1,7 @@
 # `readme-cli-help`
 
+Maintain the output of a help command in your `README` file.
+
 ## Usage
 
 1. Include the following in your `README.md` file:
@@ -17,7 +19,7 @@ This text will be replaced by the output of the help command.
 bun x readme-cli-help "./my-command --help"`
 ```
 
-# Example
+## Example
 
 The following is a block itself generated using `readme-cli-help`:
 
