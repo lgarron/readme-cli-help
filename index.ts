@@ -15,6 +15,7 @@ const {
   options: {
     "readme-path": {
       type: "string",
+      default: DEFAULT_README_PATH,
     },
     help: {
       type: "boolean",
@@ -39,7 +40,7 @@ if (positionals.length !== 1) {
 }
 
 const [helpCommand] = positionals;
-const input = await file(readmePath ?? DEFAULT_README_PATH).text();
+const input = await file(readmePath).text();
 
 // biome-ignore lint/style/useEnumInitializers: These are internal and should not be hardcoded.
 enum State {
@@ -101,4 +102,4 @@ switch (state) {
     throw new Error("Invalid state‽");
 }
 
-await write("./README.md", outputLineGroups.join("\n"));
+await write(readmePath, outputLineGroups.join("\n"));
