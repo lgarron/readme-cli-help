@@ -71,9 +71,6 @@ for (const line of input.split("\n")) {
         resolve(stdout);
       });
     });
-
-    console.log({ helpText });
-
     outputLineGroups.push(helpText);
     state = State.AfterCLICodeFence; // Set state for future lines.
   }
