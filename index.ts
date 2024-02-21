@@ -60,7 +60,7 @@ let state: State = State.BeforeCLICodeFence;
 // biome-ignore lint/style/useTemplate: Template syntax would require escaping each backtick, which is not as clear.
 const fenceLine = "````" + fence;
 
-const outputLineGroups: string[] = [];
+let outputLineGroups: string[] = [];
 for (const line of input.split("\n")) {
   if (state === State.InsideCLICodeFence) {
     if (line !== "````") {
@@ -82,7 +82,15 @@ for (const line of input.split("\n")) {
         });
       })) as string
     ).trim();
-    outputLineGroups.push(helpText);
+    const helpTextLines = helpText.split("\n");
+    for (const line of helpTextLines) {
+      if (line.startsWith("````")) {
+        throw new Error(
+          `Lines in the help text that look like code fences are not supported. Relevant line: ${line}`,
+        );
+      }
+    }
+    outputLineGroups = outputLineGroups.concat(helpTextLines);
     state = State.AfterCLICodeFence; // Set state for future lines.
   }
 
