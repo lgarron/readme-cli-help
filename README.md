@@ -24,5 +24,5 @@ bun x readme-cli-help "./my-command --help"`
 The following is a block itself generated using `readme-cli-help`:
 
 ````cli-help
-Usage: readme-cli-help [--help] [--fence FENCE] [--readme-path PATH] "./my/command --help"
+Usage: readme-cli-help [--help] [--fence FENCE] [--readme-path PATH] [--expect-exit-code ERROR_CODE] "./my/command --help"
 ````

@@ -10,7 +10,12 @@ const DEFAULT_README_PATH = "./README.md";
 const DEFAULT_FENCE = "cli-help";
 
 const {
-  values: { "readme-path": readmePath, help, fence },
+  values: {
+    "readme-path": readmePath,
+    help,
+    fence,
+    "expect-exit-code": expectedExitCodeString,
+  },
   positionals,
 } = parseArgs({
   options: {
@@ -23,6 +28,10 @@ const {
       type: "string",
       default: DEFAULT_FENCE,
     },
+    "expect-exit-code": {
+      // Note: an exit code code of 0 is treated as a success even if this flag is passed.
+      type: "string",
+    },
     help: {
       type: "boolean",
     },
@@ -33,7 +42,7 @@ const {
 // biome-ignore lint/style/noInferrableTypes: Explicit is better than implicit.
 function printUsageAndExit(exitCode: number = 1) {
   console.log(
-    `Usage: readme-cli-help [--help] [--fence FENCE] [--readme-path PATH] "./my/command --help"`,
+    `Usage: readme-cli-help [--help] [--fence FENCE] [--readme-path PATH] [--expect-exit-code ERROR_CODE] "./my/command --help"`,
   );
   exit(exitCode);
 }
@@ -44,6 +53,10 @@ if (help) {
 if (positionals.length !== 1) {
   printUsageAndExit();
 }
+
+const expectedExitCode = expectedExitCodeString
+  ? Number.parseInt(expectedExitCodeString)
+  : 0;
 
 const [helpCommand] = positionals;
 const input = await file(readmePath).text();
@@ -74,9 +87,15 @@ for (const line of input.split("\n")) {
       (await new Promise((resolve, reject) => {
         exec(helpCommand, (error, stdout, _stderr) => {
           if (error) {
-            // TODO: accept status codes other than 0? Maybe when a specific flag is passed?
-            reject(error);
-            return;
+            if (error.code === expectedExitCode) {
+              console.info(
+                `Observed expected error code (${expectedExitCode}). Accepting this as a success.`,
+              );
+              resolve(stdout);
+            } else {
+              reject(error);
+              return;
+            }
           }
           resolve(stdout);
         });
