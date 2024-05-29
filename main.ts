@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 
-import { $, file, write } from "bun";
+import { file, write } from "bun";
 
 import { exec } from "node:child_process";
 import { exit } from "node:process";
