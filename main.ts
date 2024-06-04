@@ -15,6 +15,7 @@ const {
     help,
     fence,
     "expect-exit-code": expectedExitCodeString,
+    "check-only": checkOnly,
   },
   positionals,
 } = parseArgs({
@@ -32,6 +33,9 @@ const {
       // Note: an exit code code of 0 is treated as a success even if this flag is passed.
       type: "string",
     },
+    "check-only": {
+      type: "boolean",
+    },
     help: {
       type: "boolean",
     },
@@ -42,7 +46,7 @@ const {
 // biome-ignore lint/style/noInferrableTypes: Explicit is better than implicit.
 function printUsageAndExit(exitCode: number = 1) {
   console.log(
-    `Usage: readme-cli-help [--help] [--fence FENCE] [--readme-path PATH] [--expect-exit-code ERROR_CODE] "./my/command --help"`,
+    `Usage: readme-cli-help [--help] [--fence FENCE] [--readme-path PATH] [--expect-exit-code ERROR_CODE] [--check-only] "./my/command --help"`,
   );
   exit(exitCode);
 }
@@ -138,4 +142,15 @@ switch (state) {
     throw new Error("Invalid state‽");
 }
 
-await write(readmePath, outputLineGroups.join("\n"));
+const output = outputLineGroups.join("\n");
+if (checkOnly) {
+  if (input !== output) {
+    console.error("README CLI help differs from help command output!");
+    exit(1);
+  } else {
+    console.info("README CLI help matches the help command output.");
+    exit(0);
+  }
+} else {
+  await write(readmePath, output);
+}

@@ -19,11 +19,15 @@ update-Makefile:
 
 .PHONY: update-readme-cli-help
 update-readme-cli-help:
-	./index.ts "./index.ts --help"
+	./main.ts "./main.ts --help"
+
+.PHONY: update-readme-cli-help-check
+update-readme-cli-help-check:
+	./main.ts --check-only "./main.ts --help"
 
 .PHONY: test
 test:
-	./index.ts --readme-path README.test.md --fence cli-help-test "./index.ts --help"
+	./main.ts --readme-path README.test.md --fence cli-help-test "./main.ts --help"
 
 .PHONY: publish
 publish:
