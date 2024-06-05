@@ -19,6 +19,12 @@ This text will be replaced by the output of the help command.
 bun x readme-cli-help "./my-command --help"`
 ```
 
+3. (Optional) Add the following command to your CI to require the README to be kept in sync with the help command:
+
+```shell
+bun x readme-cli-help --check-only "./my-command --help"`
+```
+
 ## Example
 
 The following is a block itself generated using `readme-cli-help`:
