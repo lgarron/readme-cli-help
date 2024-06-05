@@ -13,6 +13,8 @@ This text will be replaced by the output of the help command.
 &#96;&#96;&#96;&#96;
 </pre>
 
+(Note that this block uses four ticks rather than three.)
+
 2. Add the following command to your project (e.g. to your `Makefile` or `package.json`):
 
 ```shell
