@@ -1,4 +1,3 @@
-
 # Test
 
 The following is a `cli-help` block itself generated using `readme-cli-help`:
