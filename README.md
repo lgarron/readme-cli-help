@@ -32,5 +32,17 @@ bun x readme-cli-help --check-only "./my-command --help"`
 The following is a block itself generated using `readme-cli-help`:
 
 ````cli-help
-Usage: readme-cli-help [--help] [--fence FENCE] [--readme-path PATH] [--expect-exit-code ERROR_CODE] [--check-only] "./my/command --help"
+hevc
+
+OPTIONS:
+  --readme-path <value>      - Path to the README file. [default: README.md]
+  --fence <str>              - Markdown code fence identifier (the part after the first ````). [default: cli-help]
+  --allow-exit-code <number> - Do not error if the help command returns with the specified exit code. Note: an exit code code of 0 is treated as a success even if this flag is passed. [optional]
+
+FLAGS:
+  --check-only - Check that the existing README contents match what is allowed (without modifying them).
+  --help, -h   - show help
+
+ARGUMENTS:
+  <Help command> - a string
 ````
