@@ -2,6 +2,7 @@
 
 import { exec } from "node:child_process";
 import { exit } from "node:process";
+import { message } from "@optique/core";
 import { object } from "@optique/core/constructs";
 import { map, optional, withDefault } from "@optique/core/parser";
 import { argument, flag, option } from "@optique/core/primitives";
@@ -9,6 +10,7 @@ import { integer, string } from "@optique/core/valueparser";
 import { run } from "@optique/run";
 import { path } from "@optique/run/valueparser";
 import { Path } from "path-class";
+import { version } from "./package.json" with { type: "json" };
 
 const DEFAULT_README_PATH = new Path("./README.md");
 const DEFAULT_FENCE = "cli-help";
@@ -18,19 +20,37 @@ const parser = object({
     map(
       option(
         "--readme-path",
-        path({ metavar: "OUTPUT", mustExist: true, type: "file" }),
+        path({
+          metavar: "OUTPUT",
+          mustExist: true,
+          type: "file",
+        }),
+        {
+          description: message`Path to the README file."`,
+        },
       ),
       (t) => new Path(t),
     ),
     DEFAULT_README_PATH,
   ),
-  fence: withDefault(option("--fence", string({})), DEFAULT_FENCE),
-  allowExitCode: optional(option("--allow-exit-code", integer({}))),
-  checkOnly: optional(flag("--check-only")),
+  fence: withDefault(
+    option("--fence", string(), {
+      description: message`Markdown code fence identifier (the part after the first \`\`\`\`).`,
+    }),
+    DEFAULT_FENCE,
+  ),
+  allowExitCode: optional(
+    option("--allow-exit-code", integer({}), {
+      description: message`Do not error if the help command returns with the specified exit code. Note: an exit code code of 0 is treated as a success even if this flag is passed.`,
+    }),
+  ),
+  checkOnly: optional(
+    flag("--check-only", {
+      description: message`Check that the existing README contents match what is generated using the help command (without modifying them).`,
+    }),
+  ),
   helpCommand: argument(string({ metavar: "HELP_COMMAND" })),
 });
-
-import { version } from "./package.json" with { type: "json" };
 
 const { readmePath, fence, allowExitCode, checkOnly, helpCommand } = run(
   parser,
