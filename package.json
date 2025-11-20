@@ -1,6 +1,6 @@
 {
   "name": "readme-cli-help",
-  "version": "0.3.2",
+  "version": "0.3.3-dev",
   "bin": {
     "readme-cli-help": "./main.ts"
   },
