@@ -32,7 +32,7 @@ bun x readme-cli-help --check-only "./my-command --help"`
 The following is a block itself generated using `readme-cli-help`:
 
 ````cli-help
-Usage: main.ts [--readme-path OUTPUT] [--fence STRING] [--allow-exit-code INTEGER] [--check-only] HELP_COMMAND
+Usage: readme-cli-help [--readme-path OUTPUT] [--fence STRING] [--allow-exit-code INTEGER] [--check-only] HELP_COMMAND
 
   --readme-path OUTPUT        
   --fence STRING              

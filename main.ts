@@ -35,6 +35,7 @@ import { version } from "./package.json" with { type: "json" };
 const { readmePath, fence, allowExitCode, checkOnly, helpCommand } = run(
   parser,
   {
+    programName: "readme-cli-help",
     help: "option",
     completion: "option",
     version,
