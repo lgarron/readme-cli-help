@@ -15,7 +15,8 @@
     "prepublishOnly": "make prepublishOnly"
   },
   "dependencies": {
-    "cmd-ts-too": "^0.15.3",
+    "@optique/core": "^0.6.2",
+    "@optique/run": "^0.6.2",
     "path-class": "^0.8.1"
   }
 }
