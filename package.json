@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@optique/core": ">=0.7.0",
-    "@optique/run": "^0.6.2",
+    "@optique/run": ">=0.7.0",
     "path-class": "^0.8.1"
   }
 }
