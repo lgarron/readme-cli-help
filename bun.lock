@@ -5,7 +5,7 @@
     "": {
       "name": "readme-cli-help",
       "dependencies": {
-        "@optique/core": "^0.6.2",
+        "@optique/core": ">=0.7.0",
         "@optique/run": "^0.6.2",
         "path-class": "^0.8.1",
       },
@@ -90,7 +90,7 @@
 
     "@esbuild/win32-x64": ["@esbuild/win32-x64@0.27.0", "", { "os": "win32", "cpu": "x64" }, "sha512-aIitBcjQeyOhMTImhLZmtxfdOcuNRpwlPNmlFKPcHQYPhEssw75Cl1TSXJXpMkzaua9FUetx/4OQKq7eJul5Cg=="],
 
-    "@optique/core": ["@optique/core@0.6.2", "", {}, "sha512-HTxIHJ8xLOSZotiU6Zc5BCJv+SJ8DMYmuiQM+7tjF7RolJn/pdZNe7M78G3+DgXL9lIf82l8aGcilmgVYRQnGQ=="],
+    "@optique/core": ["@optique/core@0.7.0", "", {}, "sha512-vrf+7HC/4puTDC8ssZ/1rDWB5dtPymRdM7xSp3MkmXEfu72QyBXPWTcXvRu0UFpCFAyZvJfZP1H0IhTM0ZU1lQ=="],
 
     "@optique/run": ["@optique/run@0.6.2", "", { "dependencies": { "@optique/core": "0.6.2" } }, "sha512-ERksB5bHozwEUVlTPToIc8UjZZBOgLeBhFZYh2lgldUbNDt7LItzgcErsPq5au5i5IBmmyCti4+2A3x+MRI4Xw=="],
 
@@ -107,5 +107,7 @@
     "undici-types": ["undici-types@7.16.0", "", {}, "sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw=="],
 
     "xdg-basedir": ["xdg-basedir@5.1.0", "", {}, "sha512-GCPAHLvrIH13+c0SuacwvRYj2SxJXQ4kaVTT5xgL3kPrz56XxkF21IGhjSE1+W0aw7gpBWRGXLCPnPby6lSpmQ=="],
+
+    "@optique/run/@optique/core": ["@optique/core@0.6.2", "", {}, "sha512-HTxIHJ8xLOSZotiU6Zc5BCJv+SJ8DMYmuiQM+7tjF7RolJn/pdZNe7M78G3+DgXL9lIf82l8aGcilmgVYRQnGQ=="],
   }
 }
