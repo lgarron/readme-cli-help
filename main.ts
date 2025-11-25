@@ -57,7 +57,10 @@ const { readmePath, fence, allowExitCode, checkOnly, helpCommand } = run(
   {
     programName: "readme-cli-help",
     help: "option",
-    completion: "option",
+    completion: {
+      mode: "option",
+      name: "plural",
+    },
     version,
   },
 );
