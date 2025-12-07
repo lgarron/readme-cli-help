@@ -15,7 +15,7 @@
     "@optique/run": ">=0.7.2",
     "ajv": "^8.17.1",
     "path-class": ">=0.10.3",
-    "plural-chain": ">=0.2.2",
+    "plural-chain": ">=0.2.3",
     "printable-shell-command": "^2.7.3"
   },
   "devDependencies": {
