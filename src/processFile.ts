@@ -201,7 +201,7 @@ export async function processFile(
     );
     const numLeftUpToDate = fileConfig.codeFences.length - numUpdated;
     console.info(
-      `[${blue(unresolvedPathString)}] Out of ${Plural.num.s(fileConfig.codeFences)`code blocks`}: ${Plural.num.was_were({ numLeftUpToDate })} up to date, and ${Plural.num.was_were({ numUpdated })} were updated.`,
+      `[${blue(unresolvedPathString)}] Out of ${Plural.num.s(fileConfig.codeFences)`code blocks`}: ${Plural.num.was_were({ numLeftUpToDate })} up to date, and ${Plural.num.was_were({ numUpdated })} updated.`,
     );
   }
 }
