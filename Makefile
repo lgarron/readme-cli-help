@@ -2,6 +2,9 @@
 setup:
 	bun install --frozen-lockfile
 
+.PHONY: check
+check: lint test
+
 .PHONY: lint
 lint: setup check-schema
 	bun x @biomejs/biome check
