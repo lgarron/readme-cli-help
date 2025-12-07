@@ -1,3 +1,4 @@
+import assert from "node:assert";
 import { exit } from "node:process";
 import { Readable } from "node:stream";
 import { styleText } from "node:util";
@@ -45,7 +46,7 @@ export async function processFile(
 
   const infoStringToCodeFenceConfigInfo = new Map<
     string,
-    { seen: boolean; blockConfig: CodeFenceConfig }
+    { seen: boolean; updated: boolean; blockConfig: CodeFenceConfig }
   >();
   for (const blockConfig of fileConfig.codeFences) {
     // biome-ignore lint/style/useTemplate: Template syntax would require escaping each backtick, which is not as clear.
@@ -55,6 +56,7 @@ export async function processFile(
     }
     infoStringToCodeFenceConfigInfo.set(fenceLine, {
       seen: false,
+      updated: false,
       blockConfig,
     });
   }
@@ -104,32 +106,35 @@ export async function processFile(
       outputLineGroups = outputLineGroups.concat(helpTextLines);
 
       if (
-        runtimeOptions.checkOnly &&
         // TODO: is there an ergonomic way to compare arrays without a library?
         state.oldContentLines.join("\n") !== helpTextLines.join("\n")
       ) {
-        switch (
-          state.blockConfig.onMismatchDuringCheck ??
-          ON_MISMATCH_DURING_CHECK_DEFAULT
-        ) {
-          // biome-ignore lint/suspicious/noFallthroughSwitchClause: False positive: https://github.com/biomejs/biome/issues/3235 / https://github.com/biomejs/website/issues/49
-          case OnMismatchDuringCheck.Error: {
-            console.error(
-              `${logPrefix} README CLI help differs from help command output!`,
-            );
-            exit(1);
-          }
-          case OnMismatchDuringCheck.Warn: {
-            console.warn(
-              `${logPrefix} README CLI help differs from help command output, but marked as ignored.`,
-            );
-            break;
-          }
-          case OnMismatchDuringCheck.Ignore: {
-            break;
-          }
-          default: {
-            throw new Error("Internal error.") as never;
+        // biome-ignore lint/style/noNonNullAssertion: TODO: how do we refactor to avoid this non-null assertion?
+        infoStringToCodeFenceConfigInfo.get(line)!.updated = true;
+        if (runtimeOptions.checkOnly) {
+          switch (
+            state.blockConfig.onMismatchDuringCheck ??
+            ON_MISMATCH_DURING_CHECK_DEFAULT
+          ) {
+            // biome-ignore lint/suspicious/noFallthroughSwitchClause: False positive: https://github.com/biomejs/biome/issues/3235 / https://github.com/biomejs/website/issues/49
+            case OnMismatchDuringCheck.Error: {
+              console.error(
+                `${logPrefix} README CLI help differs from help command output!`,
+              );
+              exit(1);
+            }
+            case OnMismatchDuringCheck.Warn: {
+              console.warn(
+                `${logPrefix} README CLI help differs from help command output, but marked as ignored.`,
+              );
+              break;
+            }
+            case OnMismatchDuringCheck.Ignore: {
+              break;
+            }
+            default: {
+              throw new Error("Internal error.") as never;
+            }
           }
         }
       }
@@ -186,5 +191,17 @@ export async function processFile(
     );
   } else {
     await readmePath.write(output);
+    // TODO: why can't we `.map(…)` over a `MapIterator`?
+    const numUpdated = Array.from(infoStringToCodeFenceConfigInfo.values())
+      .map((v) => (v.updated ? 1 : 0) as number)
+      .reduce((a, b) => a + b);
+    assert.equal(
+      fileConfig.codeFences.length,
+      infoStringToCodeFenceConfigInfo.size,
+    );
+    const numLeftUpToDate = fileConfig.codeFences.length - numUpdated;
+    console.info(
+      `[${blue(unresolvedPathString)}] Out of ${Plural.num.s(fileConfig.codeFences)`code blocks`}: ${Plural.num.was_were({ numLeftUpToDate })} up to date, and ${Plural.num.was_were({ numUpdated })} were updated.`,
+    );
   }
 }
