@@ -187,7 +187,7 @@ export async function processFile(
   const output = outputLineGroups.join("\n");
   if (runtimeOptions?.checkOnly) {
     console.info(
-      `[${blue(unresolvedPathString)}] README CLI help matches the help command output (${Plural.num.s(fileConfig.codeFences)`blocks`}).`,
+      `[${blue(unresolvedPathString)}] README CLI help matches the help command output (${Plural.num.s(fileConfig.codeFences)`code blocks`}).`,
     );
   } else {
     await readmePath.write(output);
