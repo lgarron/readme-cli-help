@@ -21,20 +21,21 @@ Note:
 
 2. Add the following at `./.config/readme-cli-help.json`:
 
-```json
+````json config example
 {
+  "$schema": "../node_modules/readme-cli-help/schema.json",
   "files": {
     "./README.md": {
-      "blocks": [
+      "codeFences": [
         {
-          "fence": "text help",
+          "infoString": "text help",
           "command": ["./my-command", "--help"]
         }
       ]
     }
   }
 }
-```
+````
 
 Note: each specified block must be seen exactly once (i.e. must be unique), else `readme-cli-help` will error.
 

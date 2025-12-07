@@ -7,11 +7,13 @@ lint: setup check-schema
 	bun x @biomejs/biome check
 	./src/main.ts check
 	bun x tsc --project .
+	cd ./examples/json-config/ && bun run ../../src/main.ts check
 
 .PHONY: format
 format: setup
 	bun x @biomejs/biome check --write
 	./src/main.ts update
+	cd ./examples/json-config/ && bun run ../../src/main.ts update
 
 .PHONY: update-schema
 update-schema:

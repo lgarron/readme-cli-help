@@ -6,8 +6,14 @@
       "codeFences": [
         {
           "infoString": "text help",
-          "command": ["./src/main.ts", "--help"],
-          "onMismatchDuringCheck": "error"
+          "command": ["./src/main.ts", "--help"]
+        },
+        {
+          "infoString": "json config example",
+          "command": [
+            "cat",
+            "./examples/json-config/.config/readme-cli-help.json"
+          ]
         }
       ]
     },
@@ -15,8 +21,7 @@
       "codeFences": [
         {
           "infoString": "text help",
-          "command": ["./src/main.ts", "--help"],
-          "onMismatchDuringCheck": "error"
+          "command": ["./src/main.ts", "--help"]
         }
       ]
     }
