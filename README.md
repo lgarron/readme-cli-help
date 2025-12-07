@@ -44,7 +44,7 @@ bun x readme-cli-help update
 
 ## Example
 
-The following is a block itself generated using `readme-cli-help`:
+The following is a help code block itself generated using `readme-cli-help`:
 
 ````text help
 Usage: readme-cli-help check [--config-path CONFIG_PATH]
