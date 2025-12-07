@@ -6,7 +6,7 @@ Maintain the output of help commands and other code blocks in your `README` file
 
 1. Include the following in your `README.md` file:
 
-<!-- This example uses HTML entities to avoid being detected as an actual `cli-help` code block. -->
+<!-- This example uses HTML entities to avoid being detected as an actual `readme-cli-help` code block. -->
 <pre>
 &#96;&#96;&#96;&#96;text help
 This text will be replaced by the output of the help command.
