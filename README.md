@@ -1,6 +1,6 @@
 # `readme-cli-help`
 
-Maintain the output of a help command in your `README` file.
+Maintain the output of help commands and other code blocks in your `README` file.
 
 ## Usage
 
@@ -8,35 +8,48 @@ Maintain the output of a help command in your `README` file.
 
 <!-- This example uses HTML entities to avoid being detected as an actual `cli-help` code block. -->
 <pre>
-&#96;&#96;&#96;&#96;cli-help
+&#96;&#96;&#96;&#96;text help
 This text will be replaced by the output of the help command.
 &#96;&#96;&#96;&#96;
 </pre>
 
 (Note that this block uses four ticks rather than three.)
 
-2. Add the following command to your project (e.g. to your `Makefile` or `package.json`):
+1. Add the following at `./.config/readme-cli-help.json`:
 
-```shell
-bun x readme-cli-help "./my-command --help"`
+```json
+{
+  "files": {
+    "./README.md": {
+      "blocks": [
+        {
+          "fence": "text help",
+          "command": ["./my-command", "--help"]
+        }
+      ]
+    }
+  }
+}
 ```
 
-3. (Optional) Add the following command to your CI to require the README to be kept in sync with the help command:
+1. Add the following to your scripts/`Makefile`/CI to require `README.md` to be kept in sync with the help command:
 
 ```shell
-bun x readme-cli-help --check-only "./my-command --help"`
+# Check
+bun x readme-cli-help check
+
+# Update
+bun x readme-cli-help update
 ```
 
 ## Example
 
 The following is a block itself generated using `readme-cli-help`:
 
-````cli-help
-Usage: readme-cli-help [--readme-path OUTPUT] [--fence STRING] [--allow-exit-code INTEGER] [--check-only] HELP_COMMAND
+````text help
+Usage: readme-cli-help check [--config-path CONFIG_PATH]
+       readme-cli-help update [--config-path CONFIG_PATH]
 
-  --readme-path OUTPUT        Path to the README file."
-  --fence STRING              Markdown code fence identifier (the part after the first ````).
-  --allow-exit-code INTEGER   Do not error if the help command returns with the specified exit code. Note: an exit code code of 0 is treated as a success even if this flag is passed.
-  --check-only                Check that the existing README contents match what is generated using the help command (without modifying them).
-  HELP_COMMAND
+  check                       Check the contents without updating.
+  update                      Update all contents.
 ````

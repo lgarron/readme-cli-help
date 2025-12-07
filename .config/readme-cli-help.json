@@ -1,0 +1,23 @@
+{
+  "root": "../",
+  "files": {
+    "./README.md": {
+      "blocks": [
+        {
+          "fence": "text help",
+          "command": ["./src/main.ts", "--help"],
+          "onMismatchDuringCheck": "error"
+        }
+      ]
+    },
+    "./README.test.md": {
+      "blocks": [
+        {
+          "fence": "text help",
+          "command": ["./src/main.ts", "--help"],
+          "onMismatchDuringCheck": "error"
+        }
+      ]
+    }
+  }
+}

@@ -5,21 +5,17 @@ setup:
 .PHONY: lint
 lint: setup
 	bun x @biomejs/biome check
-	./main.ts --check-only "./main.ts --help"
+	./src/main.ts check
 	bun x tsc --project .
 
 .PHONY: format
 format: setup
 	bun x @biomejs/biome check --write
-	./main.ts "./main.ts --help"
+	./src/main.ts update
 
 .PHONY: test
 test: setup
-	./main.ts --check-only --readme-path README.test.md --fence cli-help-test "./main.ts --help"
-
-.PHONY: update-test-expected
-update-test-expected: setup
-	./main.ts --readme-path README.test.md --fence cli-help-test "./main.ts --help"
+	./src/main.ts update
 
 .PHONY: publish
 publish:

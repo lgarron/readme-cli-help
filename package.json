@@ -2,7 +2,7 @@
   "name": "readme-cli-help",
   "version": "0.3.3-dev",
   "bin": {
-    "readme-cli-help": "./main.ts"
+    "readme-cli-help": "./src/main.ts"
   },
   "type": "module",
   "devDependencies": {
@@ -15,8 +15,10 @@
     "prepublishOnly": "make prepublishOnly"
   },
   "dependencies": {
-    "@optique/core": ">=0.7.0",
-    "@optique/run": ">=0.7.0",
-    "path-class": "^0.8.1"
+    "@optique/core": ">=0.7.2",
+    "@optique/run": ">=0.7.2",
+    "path-class": ">=0.10.2",
+    "plural-chain": "^0.2.1",
+    "printable-shell-command": "^2.7.3"
   }
 }
