@@ -39,7 +39,7 @@ Note:
 
 Note: each specified block must be seen exactly once (i.e. must be unique), else `readme-cli-help` will error.
 
-3. Add the following to your scripts/`Makefile`/CI to require `README.md` to be kept in sync with the help command:
+3. Add the following to your scripts/`Makefile`/CI to keep `README.md` in sync with the help command:
 
 ```shell
 # Check
