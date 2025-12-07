@@ -1,5 +1,6 @@
 import { exit } from "node:process";
 import { Readable } from "node:stream";
+import { styleText } from "node:util";
 import { Path } from "path-class";
 import { Plural } from "plural-chain";
 import { PrintableShellCommand } from "printable-shell-command";
@@ -18,6 +19,10 @@ enum State {
   BeforeCLICodeFence,
   InsideCLICodeFence,
   AfterCLICodeFence,
+}
+
+function blue(text: string): string {
+  return styleText(["bold", "blue"], text);
 }
 
 export async function processFile(
@@ -59,11 +64,11 @@ export async function processFile(
         continue;
       }
 
+      const logPrefix = `[${blue(unresolvedPathString)}][${blue(state.blockConfig.fence)}]`;
+
       if (!Array.isArray(state.blockConfig.command)) {
         // TODO: validate the JSON.
-        throw new Error(
-          `[${unresolvedPathString}][${state.blockConfig.fence}] Command is not an array of strings.`,
-        );
+        throw new Error(`${logPrefix} Command is not an array of strings.`);
       }
       const [command, ...args] = state.blockConfig.command;
       const subprocess = new PrintableShellCommand(command, args).spawn();
@@ -77,7 +82,7 @@ export async function processFile(
         // `subprocess.exitCode` could be `null`, but that doesn't require special handling.
         if (subprocess.exitCode === state.blockConfig.allowExitCode) {
           console.info(
-            `[${unresolvedPathString}][${state.blockConfig.fence}] Observed allowed exit code (${state.blockConfig.allowExitCode}). Accepting this as a success.`,
+            `${logPrefix} Observed allowed exit code (${state.blockConfig.allowExitCode}). Accepting this as a success.`,
           );
         } else {
           throw e;
@@ -88,7 +93,7 @@ export async function processFile(
       for (const line of helpTextLines) {
         if (line.startsWith("````")) {
           throw new Error(
-            `[${unresolvedPathString}][${state.blockConfig.fence}] Lines in the help text that look like code fences are not supported. Relevant line: ${line}`,
+            `${logPrefix} Lines in the help text that look like code fences are not supported. Relevant line: ${line}`,
           );
         }
       }
@@ -107,13 +112,13 @@ export async function processFile(
           // biome-ignore lint/suspicious/noFallthroughSwitchClause: False positive: https://github.com/biomejs/biome/issues/3235 / https://github.com/biomejs/website/issues/49
           case OnMismatchDuringCheck.Error: {
             console.error(
-              `[${unresolvedPathString}][${state.blockConfig.fence}] README CLI help differs from help command output!`,
+              `${logPrefix} README CLI help differs from help command output!`,
             );
             exit(1);
           }
           case OnMismatchDuringCheck.Warn: {
             console.warn(
-              `[${unresolvedPathString}][${state.blockConfig.fence}] README CLI help differs from help command output, but marked as ignored.`,
+              `${logPrefix} README CLI help differs from help command output, but marked as ignored.`,
             );
             break;
           }
@@ -133,7 +138,7 @@ export async function processFile(
     if (info) {
       if (info.seen) {
         throw new Error(
-          `[${unresolvedPathString}][${info.blockConfig.fence}] Code fence appears more than once.`,
+          `[${blue(unresolvedPathString)}] Code fence appears more than once.`,
         );
       }
       state = {
@@ -149,11 +154,11 @@ export async function processFile(
   switch (state.current) {
     case State.BeforeCLICodeFence:
       throw new Error(
-        `[${unresolvedPathString}] Did not see the start of a code fence!`,
+        `[${blue(unresolvedPathString)}] Did not see the start of a code fence!`,
       );
     case State.InsideCLICodeFence:
       throw new Error(
-        `[${unresolvedPathString}][${state.blockConfig.fence}] A code fence was started but not endeed!`,
+        `[${blue(unresolvedPathString)}][${blue(state.blockConfig.fence)}] A code fence was started but not endeed!`,
       );
     case State.AfterCLICodeFence:
       // OK
@@ -165,7 +170,7 @@ export async function processFile(
   const output = outputLineGroups.join("\n");
   if (runtimeOptions?.checkOnly) {
     console.info(
-      `[${unresolvedPathString}] README CLI help matches the help command output (${Plural.num.s(fileConfig.blocks)`blocks`}).`,
+      `[${blue(unresolvedPathString)}] README CLI help matches the help command output (${Plural.num.s(fileConfig.blocks)`blocks`}).`,
     );
   } else {
     await readmePath.write(output);
