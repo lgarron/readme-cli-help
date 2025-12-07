@@ -93,6 +93,7 @@ export async function processFile(
           );
         }
       }
+      // TODO: check output for invalid contents (e.g. code fences)?
       outputLineGroups = outputLineGroups.concat(helpTextLines);
 
       if (
