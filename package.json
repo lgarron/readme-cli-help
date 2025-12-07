@@ -4,6 +4,11 @@
   "bin": {
     "readme-cli-help": "./src/main.ts"
   },
+  "exports": {
+    "./schema.json": {
+      "default": "./schema.json"
+    }
+  },
   "type": "module",
   "devDependencies": {
     "@biomejs/biome": "^2.3.6",
