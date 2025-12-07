@@ -8,7 +8,7 @@ import {
   ON_MISMATCH_DURING_CHECK_DEFAULT,
   OnMismatchDuringCheck,
 } from "./config";
-import type { BlockConfig, FileConfig } from "./RepoConfig";
+import type { CodeFenceConfig, FileConfig } from "./RepoConfig";
 
 export interface RuntimeOptions {
   cwd: Path;
@@ -39,21 +39,24 @@ export async function processFile(
       }
     | {
         current: State.InsideCLICodeFence;
-        blockConfig: BlockConfig;
+        blockConfig: CodeFenceConfig;
         oldContentLines: string[];
       } = { current: State.BeforeCLICodeFence };
 
-  const fenceLineToBlockConfigInfo = new Map<
+  const infoStringToCodeFenceConfigInfo = new Map<
     string,
-    { seen: boolean; blockConfig: BlockConfig }
+    { seen: boolean; blockConfig: CodeFenceConfig }
   >();
-  for (const blockConfig of fileConfig.blocks) {
+  for (const blockConfig of fileConfig.codeFences) {
     // biome-ignore lint/style/useTemplate: Template syntax would require escaping each backtick, which is not as clear.
-    const fenceLine = "````" + blockConfig.fence;
-    if (fenceLineToBlockConfigInfo.has(fenceLine)) {
+    const fenceLine = "````" + blockConfig.infoString;
+    if (infoStringToCodeFenceConfigInfo.has(fenceLine)) {
       throw new Error("Duplicate fence line???");
     }
-    fenceLineToBlockConfigInfo.set(fenceLine, { seen: false, blockConfig });
+    infoStringToCodeFenceConfigInfo.set(fenceLine, {
+      seen: false,
+      blockConfig,
+    });
   }
 
   let outputLineGroups: string[] = [];
@@ -64,7 +67,7 @@ export async function processFile(
         continue;
       }
 
-      const logPrefix = `[${blue(unresolvedPathString)}][${blue(state.blockConfig.fence)}]`;
+      const logPrefix = `[${blue(unresolvedPathString)}][${blue(state.blockConfig.infoString)}]`;
 
       if (!Array.isArray(state.blockConfig.command)) {
         // TODO: validate the JSON.
@@ -134,7 +137,7 @@ export async function processFile(
       state = { current: State.AfterCLICodeFence }; // Set state for future lines.
     }
 
-    const info = fenceLineToBlockConfigInfo.get(line);
+    const info = infoStringToCodeFenceConfigInfo.get(line);
     if (info) {
       if (info.seen) {
         throw new Error(
@@ -158,7 +161,7 @@ export async function processFile(
       );
     case State.InsideCLICodeFence:
       throw new Error(
-        `[${blue(unresolvedPathString)}][${blue(state.blockConfig.fence)}] A code fence was started but not endeed!`,
+        `[${blue(unresolvedPathString)}][${blue(state.blockConfig.infoString)}] A code fence was started but not endeed!`,
       );
     case State.AfterCLICodeFence:
       // OK
@@ -167,10 +170,10 @@ export async function processFile(
       throw new Error("Invalid state‽");
   }
 
-  for (const knownBlocks of fenceLineToBlockConfigInfo.values()) {
+  for (const knownBlocks of infoStringToCodeFenceConfigInfo.values()) {
     if (!knownBlocks.seen) {
       throw new Error(
-        `Code block was not seen: ${knownBlocks.blockConfig.fence}`,
+        `Code block was not seen: ${knownBlocks.blockConfig.infoString}`,
       );
     }
   }
@@ -178,7 +181,7 @@ export async function processFile(
   const output = outputLineGroups.join("\n");
   if (runtimeOptions?.checkOnly) {
     console.info(
-      `[${blue(unresolvedPathString)}] README CLI help matches the help command output (${Plural.num.s(fileConfig.blocks)`blocks`}).`,
+      `[${blue(unresolvedPathString)}] README CLI help matches the help command output (${Plural.num.s(fileConfig.codeFences)`blocks`}).`,
     );
   } else {
     await readmePath.write(output);

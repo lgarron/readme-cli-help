@@ -1,19 +1,20 @@
 {
+  "$schema": "../schema.json",
   "root": "../",
   "files": {
     "./README.md": {
-      "blocks": [
+      "codeFences": [
         {
-          "fence": "text help",
+          "infoString": "text help",
           "command": ["./src/main.ts", "--help"],
           "onMismatchDuringCheck": "error"
         }
       ]
     },
     "./README.test.md": {
-      "blocks": [
+      "codeFences": [
         {
-          "fence": "text help",
+          "infoString": "text help",
           "command": ["./src/main.ts", "--help"],
           "onMismatchDuringCheck": "error"
         }

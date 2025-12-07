@@ -1,12 +1,12 @@
-export interface BlockConfig {
+export interface CodeFenceConfig {
   command: string[];
-  fence: string;
+  infoString: string;
   allowExitCode?: number;
   onMismatchDuringCheck?: "error" | "warn" | "ignore";
 }
 
 export interface FileConfig {
-  blocks: BlockConfig[];
+  codeFences: CodeFenceConfig[];
 }
 
 export interface RepoConfig {

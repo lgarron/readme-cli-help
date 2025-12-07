@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
-    "BlockConfig": {
+    "CodeFenceConfig": {
       "properties": {
         "allowExitCode": {
           "type": "number"
@@ -12,7 +12,7 @@
           },
           "type": "array"
         },
-        "fence": {
+        "infoString": {
           "type": "string"
         },
         "onMismatchDuringCheck": {
@@ -20,19 +20,19 @@
           "type": "string"
         }
       },
-      "required": ["command", "fence"],
+      "required": ["command", "infoString"],
       "type": "object"
     },
     "FileConfig": {
       "properties": {
-        "blocks": {
+        "codeFences": {
           "items": {
-            "$ref": "#/definitions/BlockConfig"
+            "$ref": "#/definitions/CodeFenceConfig"
           },
           "type": "array"
         }
       },
-      "required": ["blocks"],
+      "required": ["codeFences"],
       "type": "object"
     }
   },
