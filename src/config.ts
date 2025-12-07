@@ -1,11 +1,18 @@
 import { Path } from "path-class";
 import { processFile, type RuntimeOptions } from "./processFile";
 
+export enum OnMismatchDuringCheck {
+  Error = "error",
+  Warn = "warn",
+  Ignore = "ignore",
+}
+export const ON_MISMATCH_DURING_CHECK_DEFAULT = OnMismatchDuringCheck.Error;
+
 export interface BlockConfig {
   command: [string];
   fence: string;
   allowExitCode?: number;
-  onMismatchDuringCheck?: "error" | "warn" | "ignore";
+  onMismatchDuringCheck?: OnMismatchDuringCheck;
 }
 
 export interface FileConfig {

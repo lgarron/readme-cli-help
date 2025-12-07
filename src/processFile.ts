@@ -3,7 +3,12 @@ import { Readable } from "node:stream";
 import { Path } from "path-class";
 import { Plural } from "plural-chain";
 import { PrintableShellCommand } from "printable-shell-command";
-import type { BlockConfig, FileConfig } from "./config";
+import {
+  type BlockConfig,
+  type FileConfig,
+  ON_MISMATCH_DURING_CHECK_DEFAULT,
+  OnMismatchDuringCheck,
+} from "./config";
 
 export interface RuntimeOptions {
   cwd: Path;
@@ -95,22 +100,24 @@ export async function processFile(
         // TODO: is there an ergonomic way to compare arrays without a library?
         state.oldContentLines.join("\n") !== helpTextLines.join("\n")
       ) {
-        switch (state.blockConfig.onMismatchDuringCheck) {
+        switch (
+          state.blockConfig.onMismatchDuringCheck ??
+          ON_MISMATCH_DURING_CHECK_DEFAULT
+        ) {
           // biome-ignore lint/suspicious/noFallthroughSwitchClause: False positive: https://github.com/biomejs/biome/issues/3235 / https://github.com/biomejs/website/issues/49
-          case "error": {
+          case OnMismatchDuringCheck.Error: {
             console.error(
               `[${unresolvedPathString}][${state.blockConfig.fence}] README CLI help differs from help command output!`,
             );
             exit(1);
           }
-          case "warn": {
+          case OnMismatchDuringCheck.Warn: {
             console.warn(
               `[${unresolvedPathString}][${state.blockConfig.fence}] README CLI help differs from help command output, but marked as ignored.`,
             );
             break;
           }
-          case undefined:
-          case "ignore": {
+          case OnMismatchDuringCheck.Ignore: {
             break;
           }
           default: {
