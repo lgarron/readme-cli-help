@@ -8,7 +8,7 @@ import { run } from "@optique/run";
 import { path } from "@optique/run/valueparser";
 import { Path } from "path-class";
 import { version } from "../package.json" with { type: "json" };
-import { processConfigFromPath } from "./config";
+import { processConfigFromPath } from "./processConfig";
 
 const DEFAULT_CONFIG_PATH = new Path("./.config/readme-cli-help.json");
 

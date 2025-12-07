@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "BlockConfig": {
+      "properties": {
+        "allowExitCode": {
+          "type": "number"
+        },
+        "command": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "fence": {
+          "type": "string"
+        },
+        "onMismatchDuringCheck": {
+          "enum": ["error", "ignore", "warn"],
+          "type": "string"
+        }
+      },
+      "required": ["command", "fence"],
+      "type": "object"
+    },
+    "FileConfig": {
+      "properties": {
+        "blocks": {
+          "items": {
+            "$ref": "#/definitions/BlockConfig"
+          },
+          "type": "array"
+        }
+      },
+      "required": ["blocks"],
+      "type": "object"
+    }
+  },
+  "properties": {
+    "files": {
+      "additionalProperties": {
+        "$ref": "#/definitions/FileConfig"
+      },
+      "type": "object"
+    }
+  },
+  "required": ["files"],
+  "type": "object"
+}

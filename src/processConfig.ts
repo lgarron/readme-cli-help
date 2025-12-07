@@ -1,13 +1,8 @@
+import { Ajv } from "ajv";
 import { Path } from "path-class";
+import RepoConfigSchema from "../schema.json" with { type: "json" };
 import { processFile, type RuntimeOptions } from "./processFile";
 import type { RepoConfig } from "./RepoConfig";
-
-export enum OnMismatchDuringCheck {
-  Error = "error",
-  Warn = "warn",
-  Ignore = "ignore",
-}
-export const ON_MISMATCH_DURING_CHECK_DEFAULT = OnMismatchDuringCheck.Error;
 
 const { cwd } = Path;
 
@@ -25,10 +20,27 @@ function checkForDupes(repoConfig: RepoConfig) {
 
 type RuntimeOptionsWithoutCwd = Omit<RuntimeOptions, "cwd">;
 
+function validateConfig(config: RepoConfig) {
+  const validate = new Ajv().compile(RepoConfigSchema);
+  if (!validate(config)) {
+    if (validate.errors) {
+      console.log(
+        validate.errors
+          .map((error) => {
+            return `[${error.instancePath}] ${error.message}`;
+          })
+          .join("\n"),
+      );
+    }
+    throw new Error("Invalid config.");
+  }
+}
+
 export async function processConfig(
   config: RepoConfig,
   runtimeOptions: RuntimeOptionsWithoutCwd,
 ) {
+  validateConfig(config);
   // Run a duplicate path check before we (potentially) perform any modifications on files.
   checkForDupes(config);
 

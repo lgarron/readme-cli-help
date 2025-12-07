@@ -4,11 +4,10 @@ import { Path } from "path-class";
 import { Plural } from "plural-chain";
 import { PrintableShellCommand } from "printable-shell-command";
 import {
-  type BlockConfig,
-  type FileConfig,
   ON_MISMATCH_DURING_CHECK_DEFAULT,
   OnMismatchDuringCheck,
 } from "./config";
+import type { BlockConfig, FileConfig } from "./RepoConfig";
 
 export interface RuntimeOptions {
   cwd: Path;
