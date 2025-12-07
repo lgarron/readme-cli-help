@@ -7,7 +7,7 @@
       "dependencies": {
         "@optique/core": ">=0.7.2",
         "@optique/run": ">=0.7.2",
-        "path-class": ">=0.10.2",
+        "path-class": ">=0.10.3",
         "plural-chain": "^0.2.1",
         "printable-shell-command": "^2.7.3",
       },
@@ -104,7 +104,7 @@
 
     "esbuild": ["esbuild@0.27.1", "", { "optionalDependencies": { "@esbuild/aix-ppc64": "0.27.1", "@esbuild/android-arm": "0.27.1", "@esbuild/android-arm64": "0.27.1", "@esbuild/android-x64": "0.27.1", "@esbuild/darwin-arm64": "0.27.1", "@esbuild/darwin-x64": "0.27.1", "@esbuild/freebsd-arm64": "0.27.1", "@esbuild/freebsd-x64": "0.27.1", "@esbuild/linux-arm": "0.27.1", "@esbuild/linux-arm64": "0.27.1", "@esbuild/linux-ia32": "0.27.1", "@esbuild/linux-loong64": "0.27.1", "@esbuild/linux-mips64el": "0.27.1", "@esbuild/linux-ppc64": "0.27.1", "@esbuild/linux-riscv64": "0.27.1", "@esbuild/linux-s390x": "0.27.1", "@esbuild/linux-x64": "0.27.1", "@esbuild/netbsd-arm64": "0.27.1", "@esbuild/netbsd-x64": "0.27.1", "@esbuild/openbsd-arm64": "0.27.1", "@esbuild/openbsd-x64": "0.27.1", "@esbuild/openharmony-arm64": "0.27.1", "@esbuild/sunos-x64": "0.27.1", "@esbuild/win32-arm64": "0.27.1", "@esbuild/win32-ia32": "0.27.1", "@esbuild/win32-x64": "0.27.1" }, "bin": { "esbuild": "bin/esbuild" } }, "sha512-yY35KZckJJuVVPXpvjgxiCuVEJT67F6zDeVTv4rizyPrfGBUpZQsvmxnN+C371c2esD/hNMjj4tpBhuueLN7aA=="],
 
-    "path-class": ["path-class@0.10.2", "", { "dependencies": { "@types/node": "^24.7.1", "readme-cli-help": ">=0.3.1", "xdg-basedir": "^5.1.0" } }, "sha512-5NxurdtQiVkRdB1m738O7s1eQQdLr9VGPbRWsUDs2hqEEqhfENcgbQHC+s5zczhwtAzppmrB8VHijJi5NwE2Sg=="],
+    "path-class": ["path-class@0.10.3", "", { "dependencies": { "@types/node": "^24.7.1", "xdg-basedir": "^5.1.0" } }, "sha512-teUDitVwoVlJTDOXb/WGwDcxRvcwVVdDh8IpfYzZ+E4FaPNtfE7py0eNE2mCNZ10m1IckTpQjCG2cujpw42tTw=="],
 
     "plural-chain": ["plural-chain@0.2.1", "", {}, "sha512-MTAkLYFtZL+yoFjYzUbsl3fiXftB16MS2AS9MLxApJIgv91neiu65LK/Jg3LNpah/38JErt2NrJsmYdpO1hiLQ=="],
 
@@ -121,6 +121,8 @@
     "undici-types": ["undici-types@7.16.0", "", {}, "sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw=="],
 
     "xdg-basedir": ["xdg-basedir@5.1.0", "", {}, "sha512-GCPAHLvrIH13+c0SuacwvRYj2SxJXQ4kaVTT5xgL3kPrz56XxkF21IGhjSE1+W0aw7gpBWRGXLCPnPby6lSpmQ=="],
+
+    "printable-shell-command/path-class": ["path-class@0.10.2", "", { "dependencies": { "@types/node": "^24.7.1", "readme-cli-help": ">=0.3.1", "xdg-basedir": "^5.1.0" } }, "sha512-5NxurdtQiVkRdB1m738O7s1eQQdLr9VGPbRWsUDs2hqEEqhfENcgbQHC+s5zczhwtAzppmrB8VHijJi5NwE2Sg=="],
 
     "readme-cli-help/@optique/core": ["@optique/core@0.6.5", "", {}, "sha512-H3O//t/qxq7GT+25oLi4mXyxB/PccTcj+0P4HcboDcTnAN7gcTgoxvAugaHExw9s7WrVOlRQRZuYXseKtU/cyw=="],
 

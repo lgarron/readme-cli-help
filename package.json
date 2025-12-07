@@ -17,7 +17,7 @@
   "dependencies": {
     "@optique/core": ">=0.7.2",
     "@optique/run": ">=0.7.2",
-    "path-class": ">=0.10.2",
+    "path-class": ">=0.10.3",
     "plural-chain": "^0.2.1",
     "printable-shell-command": "^2.7.3"
   }
