@@ -144,6 +144,7 @@ export async function processFile(
           `[${blue(unresolvedPathString)}] Code fence appears more than once.`,
         );
       }
+      info.seen = true;
       state = {
         current: State.InsideCLICodeFence,
         blockConfig: info.blockConfig,
