@@ -167,6 +167,14 @@ export async function processFile(
       throw new Error("Invalid state‽");
   }
 
+  for (const knownBlocks of fenceLineToBlockConfigInfo.values()) {
+    if (!knownBlocks.seen) {
+      throw new Error(
+        `Code block was not seen: ${knownBlocks.blockConfig.fence}`,
+      );
+    }
+  }
+
   const output = outputLineGroups.join("\n");
   if (runtimeOptions?.checkOnly) {
     console.info(
