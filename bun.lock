@@ -10,7 +10,7 @@
         "ajv": "^8.17.1",
         "path-class": ">=0.10.3",
         "plural-chain": ">=0.2.3",
-        "printable-shell-command": "^2.7.3",
+        "printable-shell-command": "^2.7.4",
       },
       "devDependencies": {
         "@biomejs/biome": "^2.3.6",
@@ -188,7 +188,7 @@
 
     "plural-chain": ["plural-chain@0.2.3", "", {}, "sha512-iqzW8/mS8+Yveu1mZtoEtdmg0yglWDM7mL1bKzD4H+BlMaGCl/Ig0oTfSy4oEm6A20sgLS0zWaLbgmRemr1bFg=="],
 
-    "printable-shell-command": ["printable-shell-command@2.7.3", "", { "dependencies": { "path-class": ">=0.6.1", "type-fest": ">=5.1.0" }, "optionalDependencies": { "@types/bun": "^1.2.20", "@types/node": "^24.2.0" } }, "sha512-dze0g2XUiBTp6EGd5kPSR2i422sabXWFjnk8qOqxbeUCxcNMNDjA2Z3XYq/8ZL6GmS7nhc/HjtRFXBvRP3c03A=="],
+    "printable-shell-command": ["printable-shell-command@2.7.4", "", { "dependencies": { "path-class": ">=0.10.3", "type-fest": ">=5.1.0" }, "optionalDependencies": { "@types/bun": "^1.2.20", "@types/node": "^24.2.0" } }, "sha512-J5yL44IhDKrFXkdkH2mdNE+weTuiZum8fQDeIc83/Zju+Vpy64paS8RemC5gVhxu0A0j5SWsZZymXh6CTDzybA=="],
 
     "require-directory": ["require-directory@2.1.1", "", {}, "sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q=="],
 
