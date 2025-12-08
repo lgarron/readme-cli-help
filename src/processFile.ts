@@ -11,6 +11,7 @@ import {
 } from "./config";
 import type { CodeFenceConfig, FileConfig } from "./RepoConfig";
 
+const CODE_FENCE_BACKTICKS = "````";
 export interface RuntimeOptions {
   cwd: Path;
   checkOnly?: boolean;
@@ -49,8 +50,7 @@ export async function processFile(
     { seen: boolean; updated: boolean; blockConfig: CodeFenceConfig }
   >();
   for (const blockConfig of fileConfig.codeFences) {
-    // biome-ignore lint/style/useTemplate: Template syntax would require escaping each backtick, which is not as clear.
-    const fenceLine = "````" + blockConfig.infoString;
+    const fenceLine = blockConfig.infoString;
     if (infoStringToCodeFenceConfigInfo.has(fenceLine)) {
       throw new Error("Duplicate fence line???");
     }
@@ -64,7 +64,7 @@ export async function processFile(
   let outputLineGroups: string[] = [];
   for (const line of input.split("\n")) {
     if (state.current === State.InsideCLICodeFence) {
-      if (line !== "````") {
+      if (line !== CODE_FENCE_BACKTICKS) {
         state.oldContentLines.push(line);
         continue;
       }
@@ -96,7 +96,7 @@ export async function processFile(
       const helpText = (await responseText).trim();
       const helpTextLines = helpText.split("\n");
       for (const line of helpTextLines) {
-        if (line.startsWith("````")) {
+        if (line.startsWith(CODE_FENCE_BACKTICKS)) {
           throw new Error(
             `${logPrefix} Lines in the help text that look like code fences are not supported. Relevant line: ${line}`,
           );
@@ -110,7 +110,9 @@ export async function processFile(
         state.oldContentLines.join("\n") !== helpTextLines.join("\n")
       ) {
         // biome-ignore lint/style/noNonNullAssertion: TODO: how do we refactor to avoid this non-null assertion?
-        infoStringToCodeFenceConfigInfo.get(line)!.updated = true;
+        infoStringToCodeFenceConfigInfo.get(
+          state.blockConfig.infoString,
+        )!.updated = true;
         if (runtimeOptions.checkOnly) {
           switch (
             state.blockConfig.onMismatchDuringCheck ??
@@ -142,21 +144,24 @@ export async function processFile(
       state = { current: State.AfterCLICodeFence }; // Set state for future lines.
     }
 
-    const info = infoStringToCodeFenceConfigInfo.get(line);
-    if (info) {
-      if (info.seen) {
-        throw new Error(
-          `[${blue(unresolvedPathString)}] Code fence appears more than once.`,
-        );
+    if (line.startsWith(CODE_FENCE_BACKTICKS)) {
+      const info = infoStringToCodeFenceConfigInfo.get(
+        line.slice(CODE_FENCE_BACKTICKS.length),
+      );
+      if (info) {
+        if (info.seen) {
+          throw new Error(
+            `[${blue(unresolvedPathString)}] Code fence appears more than once.`,
+          );
+        }
+        info.seen = true;
+        state = {
+          current: State.InsideCLICodeFence,
+          blockConfig: info.blockConfig,
+          oldContentLines: [],
+        };
       }
-      info.seen = true;
-      state = {
-        current: State.InsideCLICodeFence,
-        blockConfig: info.blockConfig,
-        oldContentLines: [],
-      };
     }
-
     outputLineGroups.push(line);
   }
 
