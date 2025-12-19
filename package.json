@@ -1,15 +1,22 @@
 {
   "name": "readme-cli-help",
   "version": "0.4.11-dev",
-  "bin": {
-    "readme-cli-help": "./src/main.ts"
+  "description": "Maintain the output of help commands and other code blocks in your `README` file.",
+  "author": "Lucas Garron <code@garron.net>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lgarron/readme-cli-help.git"
   },
+  "type": "module",
   "exports": {
     "./schema.json": {
       "default": "./schema.json"
     }
   },
-  "type": "module",
+  "bin": {
+    "readme-cli-help": "src/main.ts"
+  },
   "dependencies": {
     "@optique/core": ">=0.7.2",
     "@optique/run": ">=0.7.2",
@@ -25,6 +32,10 @@
     "typescript": "^5.9.3",
     "typescript-json-schema": "^0.67.0"
   },
+  "files": [
+    "./schema.json",
+    "./src/"
+  ],
   "scripts": {
     "prepublishOnly": "make prepublishOnly"
   }

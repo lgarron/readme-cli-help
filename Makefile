@@ -3,7 +3,7 @@ setup:
 	bun install --frozen-lockfile
 
 .PHONY: check
-check: lint test
+check: lint test check-package.json
 
 .PHONY: lint
 lint: setup check-schema
@@ -26,6 +26,10 @@ update-schema:
 check-schema:
 	bun run ./script/schema/check.ts
 
+.PHONY: check-package.json
+check-package.json: setup
+	bun x --package @cubing/dev-config package.json check
+
 .PHONY: test
 test: setup
 	./src/main.ts update
@@ -35,7 +39,7 @@ publish:
 	npm publish
 
 .PHONY: prepublishOnly
-prepublishOnly: lint test
+prepublishOnly: clean check
 
 .PHONY: clean
 clean:
