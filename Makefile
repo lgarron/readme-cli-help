@@ -41,10 +41,12 @@ publish:
 .PHONY: prepublishOnly
 prepublishOnly: clean check
 
+RM_RF = bun -e 'process.argv.slice(1).map(p => process.getBuiltinModule("node:fs").rmSync(p, {recursive: true, force: true, maxRetries: 5}))' --
+
 .PHONY: clean
 clean:
-	# no-op
+	@ # no-op at the moment
 
 .PHONY: reset
 reset: clean
-	rm -rf ./node_modules
+	${RM_RF} ./node_modules/
