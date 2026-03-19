@@ -48,5 +48,4 @@ export async function processConfigFromPath(
 ) {
   const config: RepoConfig = await path.readJSON();
   await processConfig(config, runtimeOptions);
-  return;
 }
