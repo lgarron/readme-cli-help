@@ -58,6 +58,6 @@ const options = run(parser, {
   version,
 });
 
-processConfigFromPath(options.configPath ?? DEFAULT_CONFIG_PATH, {
+await processConfigFromPath(options.configPath ?? DEFAULT_CONFIG_PATH, {
   checkOnly: options.subcommand === "check",
 });

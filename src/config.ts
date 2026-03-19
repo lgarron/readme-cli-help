@@ -35,7 +35,10 @@ export async function processConfig(
   for (const [unresolvedPathString, pathConfig] of Object.entries(
     config.files,
   )) {
-    processFile(unresolvedPathString, pathConfig, { cwd, ...runtimeOptions });
+    await processFile(unresolvedPathString, pathConfig, {
+      cwd,
+      ...runtimeOptions,
+    });
   }
 }
 
