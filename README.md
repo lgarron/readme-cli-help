@@ -1,3 +1,24 @@
+# 🏔️ Moved to Codeberg 🏔️
+
+This repo is now maintained at:
+
+<span style="font-size: 200%"><a href="https://codeberg.org/lgarron/readme-cli-help">https://codeberg.org/lgarron/readme-cli-help</a></span>
+
+Original README contents are below.
+
+<br>
+<br>
+<br>
+<br>
+
+--------
+
+<br>
+<br>
+<br>
+<br>
+
+
 # `readme-cli-help`
 
 Maintain the output of help commands and other code blocks in your `README` file.
